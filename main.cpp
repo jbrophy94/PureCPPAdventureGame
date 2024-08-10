@@ -14,7 +14,11 @@ int main()
     InitWindow(windowDimensions[0], windowDimensions[1], "Call To Adventure!");
     SetTargetFPS(fps);
 
+    // Initialize Audio
+    InitAudioDevice();
+
     Texture2D map = LoadTexture("textures/nature_tileset/OpenWorldMap24x24.png");
+    Music backgroundMusic = LoadMusicStream("Audio/background_music.wav");
     Vector2 mapPos{0.0, 0.0};
     const float mapScale{4.0f};
 
@@ -74,9 +78,14 @@ int main()
         enemy->setTarget(&knight);
     }
 
+    PlayMusicStream(backgroundMusic);
+
     // Game Loop
     while (!WindowShouldClose())
     {
+        // Update music:
+        UpdateMusicStream(backgroundMusic);
+
         // Draw Window
         BeginDrawing();
         ClearBackground(WHITE);
@@ -129,17 +138,21 @@ int main()
             enemy->tick(GetFrameTime());
         }
 
+        // attack
         if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
-            for (auto enemy : enemies)
+            knight.playAttackScream();
+        for (auto enemy : enemies)
+        {
+            if (CheckCollisionRecs(enemy->getCollisionRec(), knight.getWeaponCollisionRec()))
             {
-                if (CheckCollisionRecs(enemy->getCollisionRec(), knight.getWeaponCollisionRec()))
-                {
-                    enemy->setAlive(false);
-                }
+                enemy->setAlive(false);
             }
+        }
 
         EndDrawing();
     }
+
+    UnloadMusicStream(backgroundMusic);
 
     CloseWindow();
 

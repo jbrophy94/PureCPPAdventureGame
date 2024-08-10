@@ -81,3 +81,8 @@ void Character::takeDamage(float damage)
         setAlive(false);
     };
 };
+
+void Character::playAttackScream()
+{
+    PlaySound(attackScream);
+}

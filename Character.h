@@ -12,11 +12,13 @@ public:
     Rectangle getWeaponCollisionRec() const { return weaponCollisionRec; };
     float getHealth() const { return health; };
     void takeDamage(float damage);
+    void playAttackScream();
 
 private:
     int windowWidth{};
     int windowHeight{};
     Texture2D weapon{LoadTexture("textures/characters/weapon_sword.png")};
+    Sound attackScream = LoadSound("Audio/attack_scream.wav");
     Rectangle weaponCollisionRec{};
     float health{100.f};
 };

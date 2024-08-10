@@ -5,14 +5,14 @@
 class BaseCharacter
 {
 public:
-    BaseCharacter();
-    Vector2 getWorldPos();
-    void undoMovement();
-    Rectangle getCollisionRec();
-    virtual void tick(float deltaTime);
-    virtual Vector2 getScreenPos() = 0;
-    bool getAlive() { return alive; };
-    void setAlive(bool isAlive) { alive = isAlive; };
+    BaseCharacter(); //constructor
+    Vector2 getWorldPos(); //get position on the map
+    void undoMovement(); //to prevent moving when path is obstructed
+    Rectangle getCollisionRec(); //to measure collisions
+    virtual void tick(float deltaTime); //behavior per frame
+    virtual Vector2 getScreenPos() = 0; //get position on the screen
+    bool getAlive() { return alive; }; //see if alive or dead
+    void setAlive(bool isAlive) { alive = isAlive; }; //set alive status
 
 protected:
     Texture2D texture{LoadTexture("textures/characters/knight_idle_spritesheet.png")};
